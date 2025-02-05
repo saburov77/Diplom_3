@@ -1,131 +1,72 @@
-package UITests.pageObjects;
+package pageobject;
 
+import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
     private WebDriver driver;
 
-
-    // Локатор для кнопки "Войти в аккаунт"
-    @FindBy(xpath = "//button[contains(text(),'Войти в аккаунт')]")
-    private WebElement loginAccountButton;
-
-    // Локатор для кнопки регистрации
-    @FindBy(xpath = "//*[@id=\"root\"]/div/main/div/div/p[1]/a")
-    private WebElement registerButton;
-
-    // Локатор для кнопки "Личный Кабинет"
-    @FindBy(xpath = "//*[@id=\"root\"]/div/header/nav/a/p")
-    private WebElement personalCabinetButton;
-
-    // Локатор для кнопки "Войти" в форме регитрации
-    @FindBy(xpath = "//a[text()='Войти']")
-    private WebElement registerLoginButton;
-
     // Локатор для поля ввода email
-    @FindBy(xpath = "//*[@id=\"root\"]/div/main/div/form/fieldset[1]/div/div/input")
-    private WebElement emailInput;
+    private final By emailInput = By.xpath(".//input[@name='name']");
 
-    // Локатор для поля ввода пароля
-    @FindBy(xpath = "//input[@type='password']")
-    private WebElement passwordInput;
+    // Локатор для поля ввода password
+    private final By passwordInput = By.xpath(".//input[@type='password']");
 
-    // Локатор для поля ввода пароля в форме восстановления пароля
-    @FindBy(xpath = "//*[@id=\"root\"]/div/main/div/form/fieldset/div/div/input")
-    private WebElement passwordRestoreInput;
-
-    // Локатор для книпоки "Восстановить пароль"
-    @FindBy(xpath = "//*[@id=\"root\"]/div/main/div/div/p[2]/a")
-    private WebElement restorePasswordButton;
-
-    // Локатор для кнопки "Войти" в: входе на главной странице, в форме регистрации, через кнопку 'Личный кабинет'
-    @FindBy(xpath = "//button[text()='Войти']")
-    private WebElement submitLoginButton;
-
-    // Локатор для кнопки "Войти" в форме восстановления пароля
-    @FindBy(xpath = "//*[@id=\"root\"]/div/main/div/div/p/a")
-    private WebElement submitRestoreLoginButton;
+    // Локатор для кнопки "Войти"
+    private final By loginButton = By.xpath(".//button[text()='Войти']");
 
     // Локатор для кнопки "Конструктор"
-    @FindBy(xpath = "//*[@id=\"root\"]/div/header/nav/ul/li[1]/a/p")
-    private WebElement constructorButton;
+    private final By constructorButton = By.xpath(".//nav/ul/li[1]/a");
 
     // Локатор для кнопки "Выйти"
-    @FindBy(xpath = "//button[text()='Выход']")
-    private WebElement exitButton;
+    private final By exitButton = By.className("Account_button__14Yp3");
 
     // Локатор для логотипа Stellar Burgers
-    @FindBy(xpath = "//*[@id=\"root\"]/div/header/nav/div")
-    private WebElement stellarBurgersLogo;
+    private final By stellarBurgersLogo = By.xpath(".//div/header/nav/div");
 
+    //Локатор для страницы входа
+    private final By inputPage = By.xpath(".//div/main/div/h2");
 
 
     // Конструктор
     public LoginPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver, this);
     }
 
-
-
-    // Методы для взаимодействия с элементами
-    public void submitLogin() {
-
-        submitLoginButton.click();
+    @Step("Проверка, что по кнопке Зарегистрироваться осуществлен переход на страницу входа")
+    public String checkLoginPage(){
+        return driver.findElement(inputPage).getText();
     }
 
-    public void clickPersonalCabinetButton() {
+    @Step("Ввеси данные в поля формы входа в аккаунт: email, password")
+    public void spellingField(String email, String password) {
 
-        personalCabinetButton.click();
+        driver.findElement(emailInput).sendKeys(email);
+        driver.findElement(passwordInput).sendKeys(password);
+
     }
 
-    public void clickRegisterLoginButton() {
-
-        registerLoginButton.click();
+    @Step("Кликнуть по кнопке Войти")
+    public void clickLoginButton() {
+        driver.findElement(loginButton).click();
     }
 
-    public void clickRestorePasswordButton() {
-
-        restorePasswordButton.click();
-    }
-
-    public void enterEmail(String email) {
-
-        emailInput.sendKeys(email);
-    }
-
-    public void enterPassword(String password) {
-
-        passwordInput.sendKeys(password);
-    }
-
-    public void enterRestorePassword(String password) {
-
-        passwordRestoreInput.sendKeys(password);
-    }
-
-    public void submitRestoreLogin() {
-
-        submitRestoreLoginButton.click();
-    }
-
+    @Step("Кликнуть по кнопке - Конструктор")
     public void clickConstructor() {
-
-        constructorButton.click();
+        driver.findElement(constructorButton).click();
     }
 
+    @Step("Кликнуть по логотипу Stellar Burgers")
+    public void clickLogo() {
+        driver.findElement(stellarBurgersLogo).click();
+    }
+
+    @Step("Кликнуть по кнопке Выход")
     public void clickExit() {
-
-        exitButton.click();
+        driver.findElement(exitButton).click();
     }
 
-    public void clickStellarBurgersLogo() {
-
-        stellarBurgersLogo.click();
-    }
 }
 
 

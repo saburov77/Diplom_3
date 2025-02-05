@@ -1,12 +1,11 @@
-package model;
+package api;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-
 import org.apache.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
-import static model.Constants.*;
+import static service.Constants.*;
 
 public class UserApi {
 

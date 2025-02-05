@@ -1,52 +1,56 @@
-/* Раздел «Конструктор».
-Проверь, что работают переходы к разделам:
-- «Булки»,
-- «Соусы»,
-- «Начинки»
-*/
-
-package UITests;
-
 import io.qameta.allure.Description;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import java.util.Collection;
-import static org.junit.Assert.assertEquals;
+import org.openqa.selenium.WebDriver;
+import pageobject.MainPage;
+import service.Browser;
 
-@RunWith(Parameterized.class)
-public class ConstructorTest extends BaseTest {
-    @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return BrowserParameters.getBrowserData(); // Вызов параметров из внешнего класса
+import java.io.IOException;
+
+import static service.Constants.MAIN_PAGE_URL;
+
+
+public class ConstructorTest {
+
+    private WebDriver driver;
+    private MainPage mainPage;
+
+
+    @Before
+    public void startActivity() throws IOException {
+        driver = Browser.initDriver();
+        driver.get(MAIN_PAGE_URL);
+        mainPage = new MainPage(driver);
+
     }
 
-    // Конструктор для передачи параметров в BaseTest
-    // Для вызова тестов в разных браузерах одной командой mvn clean test
-    public ConstructorTest(String browser) {
-        super(browser);
+    @After
+    public void tearDown() {
+        // Закрой браузер
+        driver.quit();
     }
-
 
     @Test
     @Description("Проверка перехода в раздел 'Соусы'")
     public void testSaucesSection() {
-        constructorPage.clickSaucesSection();
-        assertEquals("Соусы", constructorPage.getSaucesHeaderText());
+        mainPage.clickSaucesSection();
+        Assert.assertEquals("Соусы", mainPage.getSaucesHeaderText());
     }
 
     @Test
     @Description("Проверка перехода в раздел 'Начинки'")
     public void testFillingsSection() {
-        constructorPage.clickFillingsSection();
-        assertEquals("Начинки", constructorPage.getFillingsHeaderText());
+        mainPage.clickFillingsSection();
+        Assert.assertEquals("Начинки", mainPage.getFillingsHeaderText());
     }
 
     @Test
     @Description("Проверка перехода в раздел 'Булки'")
     public void testBunsSection() {
-        constructorPage.clickSaucesSection();
-        constructorPage.clickBunsSection();
-        assertEquals("Булки", constructorPage.getBunsHeaderText());
+        mainPage.clickSaucesSection();
+        mainPage.clickBunsSection();
+        Assert.assertEquals("Булки", mainPage.getBunsHeaderText());
     }
 }

@@ -1,4 +1,4 @@
-package model;
+package api;
 
 public class UserData {
     private String email;

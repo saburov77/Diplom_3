@@ -1,112 +1,64 @@
-package UITests.pageObjects;
+package pageobject;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
 
 public class RegistrationPage {
     private WebDriver driver;
 
-    // Локатор для кнопки "Войти в аккаунт"
-    @FindBy(xpath = "//button[contains(text(),'Войти в аккаунт')]")
-    private WebElement loginAccountButton;
-
     // Локатор для кнопки регистрации
-    @FindBy(xpath = "//*[@id=\"root\"]/div/main/div/div/p[1]/a")
-    private WebElement registerButton;
+    private final By registerButton = By.xpath(".//button[text()='Зарегистрироваться']");
 
     // Локатор для поля ввода имени
-    @FindBy(xpath = "//input[@name='name']")
-    private WebElement nameInput;
+    private final By nameInput = By.xpath( "//fieldset[1]/div/div/input");
 
     // Локатор для поля ввода email
-    @FindBy(xpath = "//*[@id=\"root\"]/div/main/div/form/fieldset[2]/div/div/input") 
-    private WebElement emailInput;
+    private final By emailInput = By.xpath("//fieldset[2]/div/div/input");
 
     // Локатор для поля ввода пароля
-    @FindBy(xpath = "//*[@id=\"root\"]/div/main/div/form/fieldset[3]/div/div/input")
-    private WebElement passwordInput;
-
-    // Локатор для кнопки Зарегистрироваться
-    @FindBy(xpath = "//*[@id=\"root\"]/div/main/div/form/button")
-    private WebElement registerButtonClick;
+    private final By passwordInput = By.xpath("//input[@type='password']");
+    //@FindBy(xpath = "//*[@id=\"root\"]/div/main/div/form/fieldset[3]/div/div/input")
 
     // Локатор для сообщения об ошибке
-    @FindBy(xpath = "//*[@id=\"root\"]/div/main/div/form/fieldset[3]/div/p")
-    private WebElement passwordError;
+    private final By errorMassage = By.className("input__error");
 
+    //Локатор для страницы входа
+    private final By inputPage = By.xpath(".//div/main/div/h2");
+
+    //Локатор для кнопки - Войти
+    private final By inputButton = By.className("Auth_link__1fOlj");
 
     // Конструктор
     public RegistrationPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver, this);
     }
 
-    public void waitForNameInput() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOf(nameInput));
-    }
-
-    public void waitForEmailInput() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOf(nameInput));
-    }
-
-    public void waitForPasswordInput() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOf(nameInput));
-    }
-
-    public void scrollToRegisterButton() {
-        WebElement registerButton = driver.findElement(By.xpath("//*[@id=\"root\"]/div/main/div/div/p[1]/a"));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", registerButton);
-    }
-
-
-    // Методы для взаимодействия с элементами
-    public void clickLoginAccountButton() {
-
-        loginAccountButton.click();
-    }
+    @Step("Кликнуть по кнопке - Зарегистрироваться")
     public void clickRegisterButton() {
-
-        registerButton.click();
+        driver.findElement(registerButton).click();
     }
 
-    public void enterName(String name) {
-
-        nameInput.sendKeys(name);
+    @Step("Кликнуть по кнопке - Войти")
+    public void clickInputButton() {
+        driver.findElement(inputButton).click();
     }
 
-    public void enterEmail(String email) {
-
-        emailInput.sendKeys(email);
+    @Step("Ввеси данные в поля формы регистрации: name, email, password")
+    public void spellingField(String name, String email, String password) {
+        driver.findElement(nameInput).sendKeys(name);
+        driver.findElement(emailInput).sendKeys(email);
+        driver.findElement(passwordInput).sendKeys(password);
     }
 
-    public void enterPassword(String password) {
-
-        passwordInput.sendKeys(password);
+    @Step("Проверка, что по кнопке Зарегистрироваться осуществлен переход на страницу входа")
+    public String checkLoginPage(){
+        return driver.findElement(inputPage).getText();
     }
 
-    public void clickRegisterButtonClick() {
-
-        registerButton.click();
-    }
-
-    public boolean isPasswordErrorDisplayed() {
-
-        return passwordError.isDisplayed();
-    }
-
-    public String getPasswordErrorText() {
-
-        return passwordError.getText();
+    @Step("Получить сообщение об ошибке")
+    public String getErrorText() {
+        return driver.findElement(errorMassage).getText();
     }
 }
 

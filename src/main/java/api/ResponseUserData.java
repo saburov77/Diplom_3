@@ -1,4 +1,4 @@
-package model;
+package api;
 
 public class ResponseUserData {
     private boolean success;
