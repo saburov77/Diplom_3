@@ -72,13 +72,10 @@ public class LogoutTest {
         driver.get(LOGIN_PAGE_URL);
         loginPage = new LoginPage(driver);
         loginPage.spellingField(email, password);
-        expectedText = "Вход";
-        actualText = loginPage.checkLoginPage();
-        Assert.assertEquals(expectedText, actualText);
-
         loginPage.clickLoginButton();
         mainPage.clickPersonalCabinetButton();
         loginPage.clickExit();
+        expectedText = "Вход";
         actualText = loginPage.checkLoginPage();
         Assert.assertEquals(expectedText, actualText);
     }

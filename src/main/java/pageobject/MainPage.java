@@ -10,15 +10,16 @@ public class MainPage {
 
     // Локатор для раздела "Булки"
     private final By bunsSection = By.xpath("//span[text()='Булки']");
-    private final By headerBuns = By.xpath(".//main/section[1]/div[2]/h2[1]");
+    //Локатор для заголовка активного раздела
+    private final By currentHeader = By.xpath(".//div[contains(@class, 'tab_tab_type_current__2BEPc')]");
 
     // Локатор для раздела "Соусы"
     private final By saucesSection = By.xpath("//span[text()='Соусы']");
-    private final By headerSauces = By.xpath(".//main/section[1]/div[2]/h2[2]");
+
 
     // Локатор для раздела "Начинки"
     private final By fillingsSection = By.xpath("//span[text()='Начинки']");
-    private final By headerFillings = By.xpath(".//main/section[1]/div[2]/h2[3]");
+
 
     // Локатор для кнопки "Войти в аккаунт"
     private final By loginAccountButton = By.xpath("//button[contains(text(),'Войти в аккаунт')]");
@@ -41,29 +42,22 @@ public class MainPage {
         driver.findElement(saucesSection).click();
     }
 
-    @Step("Получение текста заголовка вкладки Соусы")
-    public String getSaucesHeaderText() {
-        return driver.findElement(headerSauces).getText();
-    }
+
 
     @Step("Переход на вкладку Начинки")
     public void clickFillingsSection() {
         driver.findElement(fillingsSection).click();
     }
 
-    @Step("Получение текста заголовка вкладки Начинки")
-    public String getFillingsHeaderText() {
-        return driver.findElement(headerFillings).getText();
-    }
 
     @Step("Переход на вкладку Булки")
     public void clickBunsSection() {
         driver.findElement(bunsSection).click();
     }
 
-    @Step("Получение текста заголовка вкладки Булки")
-    public String getBunsHeaderText() {
-        return driver.findElement(headerBuns).getText();
+    @Step("Получение текста активного заголовка")
+    public String getCurrentHeaderText() {
+        return driver.findElement(currentHeader).getText();
     }
 
     @Step("Кликнуть по кнопке - Войти в аккаунт")

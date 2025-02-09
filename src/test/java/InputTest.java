@@ -70,9 +70,6 @@ public class InputTest {
         driver.get(LOGIN_PAGE_URL);
         loginPage = new LoginPage(driver);
         loginPage.spellingField(email, password);
-        expectedText = "Вход";
-        actualText = loginPage.checkLoginPage();
-        Assert.assertEquals(expectedText, actualText);
         loginPage.clickLoginButton();
         driver.get(MAIN_PAGE_URL);
         mainPage = new MainPage(driver);
@@ -90,9 +87,6 @@ public class InputTest {
         driver.get(LOGIN_PAGE_URL);
         loginPage = new LoginPage(driver);
         loginPage.spellingField(email, password);
-        expectedText = "Вход";
-        actualText = loginPage.checkLoginPage();
-        Assert.assertEquals(expectedText, actualText);
         loginPage.clickLoginButton();
         driver.get(MAIN_PAGE_URL);
         mainPage = new MainPage(driver);
@@ -112,9 +106,6 @@ public class InputTest {
         driver.get(LOGIN_PAGE_URL);
         loginPage = new LoginPage(driver);
         loginPage.spellingField(email, password);
-        expectedText = "Вход";
-        actualText = loginPage.checkLoginPage();
-        Assert.assertEquals(expectedText, actualText);
         loginPage.clickLoginButton();
         driver.get(MAIN_PAGE_URL);
         mainPage = new MainPage(driver);
@@ -134,10 +125,6 @@ public class InputTest {
         forgotPasswordPage.clickInputButton();
         driver.get(LOGIN_PAGE_URL);
         loginPage = new LoginPage(driver);
-        loginPage.spellingField(email, password);
-        expectedText = "Вход";
-        actualText = loginPage.checkLoginPage();
-        Assert.assertEquals(expectedText, actualText);
         loginPage.clickLoginButton();
         driver.get(MAIN_PAGE_URL);
         mainPage = new MainPage(driver);

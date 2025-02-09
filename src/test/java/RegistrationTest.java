@@ -1,5 +1,11 @@
+import api.ResponseUserData;
+import api.UserApi;
+import api.UserData;
 import io.qameta.allure.Description;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,8 +17,8 @@ import service.Browser;
 
 import java.io.IOException;
 
-import static service.Constants.LOGIN_PAGE_URL;
-import static service.Constants.REGISTRATION_PAGE_URL;
+import static org.hamcrest.CoreMatchers.is;
+import static service.Constants.*;
 
 public class RegistrationTest {
     private WebDriver driver;
@@ -21,9 +27,13 @@ public class RegistrationTest {
     protected String email;
     protected String password;
     protected String name;
+    protected String accessToken;
+    protected UserApi userApi;
 
     @Before
     public void startActivity() throws IOException {
+        RestAssured.baseURI = MAIN_PAGE_URL;
+        userApi = new UserApi();
         driver = Browser.initDriver();
         driver.get(REGISTRATION_PAGE_URL);
         registrationPage = new RegistrationPage(driver);
@@ -48,6 +58,12 @@ public class RegistrationTest {
         String expectedText = "Вход";
         String actualText = loginPage.checkLoginPage();
         Assert.assertEquals(expectedText, actualText);
+
+
+        UserData userData = new UserData(email, password);
+        Response response = userApi.loginUser(userData);
+        accessToken = response.body().as(ResponseUserData.class).getAccessToken();
+        userApi.deleteUser(accessToken);
     }
 
     @Test

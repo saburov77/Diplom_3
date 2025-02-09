@@ -36,14 +36,14 @@ public class ConstructorTest {
     @Description("Проверка перехода в раздел 'Соусы'")
     public void testSaucesSection() {
         mainPage.clickSaucesSection();
-        Assert.assertEquals("Соусы", mainPage.getSaucesHeaderText());
+        Assert.assertEquals("Соусы", mainPage.getCurrentHeaderText());
     }
 
     @Test
     @Description("Проверка перехода в раздел 'Начинки'")
     public void testFillingsSection() {
         mainPage.clickFillingsSection();
-        Assert.assertEquals("Начинки", mainPage.getFillingsHeaderText());
+        Assert.assertEquals("Начинки", mainPage.getCurrentHeaderText());
     }
 
     @Test
@@ -51,6 +51,6 @@ public class ConstructorTest {
     public void testBunsSection() {
         mainPage.clickSaucesSection();
         mainPage.clickBunsSection();
-        Assert.assertEquals("Булки", mainPage.getBunsHeaderText());
+        Assert.assertEquals("Булки", mainPage.getCurrentHeaderText());
     }
 }
